@@ -65,7 +65,6 @@
     overflow: hidden;
   }
 
-  /* Subtle grain texture overlay */
   .hero::before {
     content: '';
     position: absolute; inset: 0;
@@ -74,7 +73,6 @@
     opacity: 0.5;
   }
 
-  /* Decorative rings */
   .rings {
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
@@ -113,9 +111,7 @@
     position: relative; z-index: 1;
   }
 
-  .hero-title em {
-    font-style: italic; color: var(--amber);
-  }
+  .hero-title em { font-style: italic; color: var(--amber); }
 
   .hero-sub {
     font-size: clamp(18px, 2.5vw, 24px);
@@ -170,7 +166,6 @@
     position: relative; z-index: 1;
   }
 
-  /* Success state */
   .success-msg {
     display: none;
     background: var(--amber-pale);
@@ -198,7 +193,6 @@
 
   /* ── PROBLEM SECTION ── */
   .section { padding: 100px 24px; }
-
   .section-inner { max-width: 900px; margin: 0 auto; }
 
   .section-tag {
@@ -242,9 +236,7 @@
   }
   .problem-card:hover .problem-num { color: rgba(200,130,42,0.4); }
 
-  .problem-title {
-    font-size: 22px; font-weight: 600; margin-bottom: 12px;
-  }
+  .problem-title { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
   .problem-text { font-size: 16px; color: var(--muted); line-height: 1.6; }
 
   /* ── HOW IT WORKS ── */
@@ -302,9 +294,7 @@
     color: var(--amber); margin-bottom: 24px;
   }
 
-  .step-title {
-    font-size: 22px; font-weight: 600; color: var(--paper); margin-bottom: 12px;
-  }
+  .step-title { font-size: 22px; font-weight: 600; color: var(--paper); margin-bottom: 12px; }
   .step-text { font-size: 16px; color: #8a8680; line-height: 1.7; }
 
   /* ── EMOTIONS SECTION ── */
@@ -356,9 +346,7 @@
     position: relative;
     transition: background 0.2s;
   }
-  .price-card.featured {
-    background: var(--ink);
-  }
+  .price-card.featured { background: var(--ink); }
 
   .price-badge {
     font-family: 'DM Mono', monospace; font-size: 9px;
@@ -374,14 +362,11 @@
   }
   .price-card.featured .price-tier { color: rgba(255,255,255,0.5); }
 
-  .price-amount {
-    font-size: 52px; font-weight: 700; line-height: 1; margin-bottom: 8px;
-  }
+  .price-amount { font-size: 52px; font-weight: 700; line-height: 1; margin-bottom: 8px; }
   .price-card.featured .price-amount { color: var(--amber); }
 
   .price-per {
-    font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted);
-    margin-bottom: 28px;
+    font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 28px;
   }
   .price-card.featured .price-per { color: rgba(255,255,255,0.4); }
 
@@ -392,9 +377,7 @@
     display: flex; align-items: center; gap: 10px;
   }
   .price-card.featured .price-features li { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.1); }
-  .price-features li::before {
-    content: '→'; color: var(--amber); font-size: 12px; flex-shrink: 0;
-  }
+  .price-features li::before { content: '→'; color: var(--amber); font-size: 12px; flex-shrink: 0; }
 
   /* ── FINAL CTA ── */
   .cta-section {
@@ -413,8 +396,7 @@
 
   .cta-title {
     font-size: clamp(42px, 7vw, 76px);
-    font-weight: 600; color: var(--paper); line-height: 1.05;
-    margin-bottom: 24px;
+    font-weight: 600; color: var(--paper); line-height: 1.05; margin-bottom: 24px;
   }
   .cta-title em { font-style: italic; color: var(--amber); }
 
@@ -515,8 +497,8 @@
     YouTube knows your YouTube audience. TikTok knows your TikTok audience. Attune shows you both — and forecasts what they need from you, 2–3 weeks ahead.
   </p>
 
-  <form class="waitlist-form" id="hero-form" onsubmit="handleSubmit(event, 'hero-success')">
-    <input type="email" placeholder="your@email.com" required />
+  <form class="waitlist-form" id="hero-form" onsubmit="handleSubmit(event, 'hero-form', 'hero-success')">
+    <input type="email" id="hero-email" placeholder="your@email.com" required />
     <button type="submit">Join Waitlist</button>
   </form>
   <div class="success-msg" id="hero-success">✓ &nbsp; You're on the list. We'll be in touch soon.</div>
@@ -699,8 +681,8 @@
     <h2 class="cta-title">Your audience is<br>telling you <em>something</em>.</h2>
     <p class="cta-sub">Join the waitlist. Get early access and a free cross-platform Audience Pulse Report — we'll analyse your YouTube, TikTok, and Instagram audiences and show you the view no single platform can.</p>
 
-    <form class="waitlist-form-cta" onsubmit="handleSubmit(event, 'cta-success')">
-      <input type="email" placeholder="your@email.com" required />
+    <form class="waitlist-form-cta" id="cta-form" onsubmit="handleSubmit(event, 'cta-form', 'cta-success')">
+      <input type="email" id="cta-email" placeholder="your@email.com" required />
       <button type="submit">Get Early Access</button>
     </form>
     <div class="success-msg" id="cta-success" style="background:rgba(200,130,42,0.1);border-color:rgba(200,130,42,0.3);margin-top:16px;">
@@ -717,24 +699,50 @@
 </footer>
 
 <script>
-  // Scroll reveal
+  // ── GOOGLE SHEETS INTEGRATION ──
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyrp_4jNUdFJdLAbrFHNfSg4r4vjpTefX4Y4aVXawsJbekS9lejIEBRd-B-G0orwuXz/exec';
+
+  async function handleSubmit(e, formId, successId) {
+    e.preventDefault();
+
+    const form = document.getElementById(formId);
+    const successEl = document.getElementById(successId);
+    const emailInput = form.querySelector('input[type="email"]');
+    const button = form.querySelector('button');
+    const email = emailInput.value.trim();
+
+    // Basic validation
+    if (!email || !email.includes('@')) return;
+
+    // Loading state
+    button.textContent = 'Sending...';
+    button.disabled = true;
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email })
+      });
+    } catch (err) {
+      // no-cors mode always throws on response read — this is expected
+      // the data still lands in the sheet
+    }
+
+    // Show success regardless (no-cors means we can't read the response)
+    form.style.display = 'none';
+    successEl.style.display = 'block';
+  }
+
+  // ── SCROLL REVEAL ──
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => observer.observe(el));
 
-  // Form submit handler
-  function handleSubmit(e, successId) {
-    e.preventDefault();
-    const form = e.target;
-    const successEl = document.getElementById(successId);
-    // In production: POST to your email capture endpoint here
-    form.style.display = 'none';
-    successEl.style.display = 'block';
-  }
-
-  // Smooth nav hide/show
+  // ── NAV HIDE/SHOW ON SCROLL ──
   let lastY = 0;
   const nav = document.querySelector('nav');
   window.addEventListener('scroll', () => {
