@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attune — Know What Your Audience Needs Before They Do</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0e0c;
+    --paper: #f5f2ec;
+    --cream: #ede9e0;
+    --amber: #c8822a;
+    --amber-light: #f0c97a;
+    --amber-pale: #fdf6e7;
+    --muted: #8a8680;
+    --border: #ddd9d0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(245,242,236,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    animation: fadeDown 0.6s ease both;
+  }
+  .logo {
+    font-size: 22px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--ink);
+  }
+  .logo span { color: var(--amber); }
+  .nav-pill {
+    background: var(--ink); color: var(--paper);
+    border: none; padding: 10px 24px;
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .nav-pill:hover { background: var(--amber); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle grain texture overlay */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  /* Decorative rings */
+  .rings {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .ring {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(200,130,42,0.12);
+    transform: translate(-50%, -50%);
+    animation: pulse-ring 4s ease-in-out infinite;
+  }
+  .ring:nth-child(1) { width: 340px; height: 340px; animation-delay: 0s; }
+  .ring:nth-child(2) { width: 540px; height: 540px; animation-delay: 0.8s; }
+  .ring:nth-child(3) { width: 740px; height: 740px; animation-delay: 1.6s; }
+  .ring:nth-child(4) { width: 960px; height: 960px; animation-delay: 2.4s; border-color: rgba(200,130,42,0.06); }
+
+  @keyframes pulse-ring {
+    0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.02); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--amber);
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-title {
+    font-size: clamp(52px, 9vw, 96px);
+    font-weight: 600; line-height: 1.0;
+    letter-spacing: -1px;
+    max-width: 880px;
+    animation: fadeUp 0.8s 0.35s ease both;
+    position: relative; z-index: 1;
+  }
+
+  .hero-title em {
+    font-style: italic; color: var(--amber);
+  }
+
+  .hero-sub {
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--muted); font-weight: 400;
+    max-width: 560px; line-height: 1.6;
+    margin-top: 28px;
+    animation: fadeUp 0.8s 0.5s ease both;
+    position: relative; z-index: 1;
+  }
+
+  /* ── WAITLIST FORM ── */
+  .waitlist-form {
+    display: flex; gap: 0;
+    margin-top: 48px;
+    animation: fadeUp 0.8s 0.65s ease both;
+    position: relative; z-index: 1;
+    max-width: 480px; width: 100%;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+  }
+
+  .waitlist-form input {
+    flex: 1;
+    padding: 16px 20px;
+    font-family: 'DM Mono', monospace; font-size: 13px;
+    border: 1.5px solid var(--border);
+    border-right: none;
+    background: #fff; color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .waitlist-form input::placeholder { color: #bbb; }
+  .waitlist-form input:focus { border-color: var(--amber); }
+
+  .waitlist-form button {
+    padding: 16px 28px;
+    background: var(--amber); color: #fff;
+    border: none; cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap;
+  }
+  .waitlist-form button:hover { background: var(--ink); }
+  .waitlist-form button:active { transform: scale(0.98); }
+
+  .hero-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: var(--muted); letter-spacing: 0.5px;
+    margin-top: 14px;
+    animation: fadeUp 0.8s 0.75s ease both;
+    position: relative; z-index: 1;
+  }
+
+  /* Success state */
+  .success-msg {
+    display: none;
+    background: var(--amber-pale);
+    border: 1px solid var(--amber-light);
+    padding: 16px 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; color: var(--amber);
+    letter-spacing: 1px;
+    margin-top: 20px;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    display: flex; align-items: center; gap: 20px;
+    padding: 0 48px; max-width: 900px; margin: 0 auto;
+  }
+  .section-divider::before, .section-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .section-divider span {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 3px; color: var(--muted); text-transform: uppercase;
+  }
+
+  /* ── PROBLEM SECTION ── */
+  .section { padding: 100px 24px; }
+
+  .section-inner { max-width: 900px; margin: 0 auto; }
+
+  .section-tag {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 4px; text-transform: uppercase; color: var(--amber);
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 600; line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+
+  .section-title em { font-style: italic; color: var(--amber); }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    margin-top: 60px;
+    border: 1px solid var(--border);
+  }
+
+  .problem-card {
+    background: var(--paper);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .problem-card:hover { background: var(--amber-pale); }
+
+  .problem-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 52px; font-weight: 500;
+    color: rgba(200,130,42,0.15);
+    line-height: 1; margin-bottom: 20px;
+    transition: color 0.3s;
+  }
+  .problem-card:hover .problem-num { color: rgba(200,130,42,0.4); }
+
+  .problem-title {
+    font-size: 22px; font-weight: 600; margin-bottom: 12px;
+  }
+  .problem-text { font-size: 16px; color: var(--muted); line-height: 1.6; }
+
+  /* ── HOW IT WORKS ── */
+  .how-section {
+    background: var(--ink);
+    padding: 100px 24px;
+    position: relative; overflow: hidden;
+  }
+
+  .how-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(200,130,42,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(200,130,42,0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .how-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+
+  .how-tag {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 4px; text-transform: uppercase; color: var(--amber);
+    margin-bottom: 20px;
+  }
+
+  .how-title {
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 600; line-height: 1.1; color: var(--paper);
+  }
+  .how-title em { font-style: italic; color: var(--amber); }
+
+  .steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .step {
+    background: rgba(255,255,255,0.03);
+    padding: 40px 36px;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.3s;
+    position: relative;
+  }
+  .step:hover { background: rgba(200,130,42,0.08); }
+
+  .step-icon {
+    width: 48px; height: 48px;
+    border: 1px solid rgba(200,130,42,0.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace; font-size: 16px;
+    color: var(--amber); margin-bottom: 24px;
+  }
+
+  .step-title {
+    font-size: 22px; font-weight: 600; color: var(--paper); margin-bottom: 12px;
+  }
+  .step-text { font-size: 16px; color: #8a8680; line-height: 1.7; }
+
+  /* ── EMOTIONS SECTION ── */
+  .emotions-section { padding: 100px 24px; background: var(--cream); }
+  .emotions-inner { max-width: 900px; margin: 0 auto; }
+
+  .emotions-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 60px;
+  }
+
+  .emotion-chip {
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 24px 20px;
+    text-align: center;
+    transition: all 0.25s;
+    cursor: default;
+  }
+  .emotion-chip:hover {
+    border-color: var(--amber);
+    background: var(--amber-pale);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(200,130,42,0.15);
+  }
+
+  .emotion-icon { font-size: 28px; margin-bottom: 10px; }
+  .emotion-name { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .emotion-desc { font-size: 13px; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+  /* ── PRICING ── */
+  .pricing-section { padding: 100px 24px; }
+  .pricing-inner { max-width: 900px; margin: 0 auto; }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 60px;
+  }
+
+  .price-card {
+    background: var(--paper);
+    padding: 44px 32px;
+    position: relative;
+    transition: background 0.2s;
+  }
+  .price-card.featured {
+    background: var(--ink);
+  }
+
+  .price-badge {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 10px; background: var(--amber);
+    color: #fff; display: inline-block; margin-bottom: 20px;
+  }
+
+  .price-tier {
+    font-size: 13px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; font-family: 'DM Mono', monospace;
+    color: var(--muted); margin-bottom: 16px;
+  }
+  .price-card.featured .price-tier { color: rgba(255,255,255,0.5); }
+
+  .price-amount {
+    font-size: 52px; font-weight: 700; line-height: 1; margin-bottom: 8px;
+  }
+  .price-card.featured .price-amount { color: var(--amber); }
+
+  .price-per {
+    font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted);
+    margin-bottom: 28px;
+  }
+  .price-card.featured .price-per { color: rgba(255,255,255,0.4); }
+
+  .price-features { list-style: none; }
+  .price-features li {
+    font-size: 15px; color: var(--muted); padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .price-card.featured .price-features li { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.1); }
+  .price-features li::before {
+    content: '→'; color: var(--amber); font-size: 12px; flex-shrink: 0;
+  }
+
+  /* ── FINAL CTA ── */
+  .cta-section {
+    padding: 120px 24px;
+    text-align: center;
+    background: var(--ink);
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(200,130,42,0.1) 0%, transparent 70%);
+  }
+
+  .cta-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+
+  .cta-title {
+    font-size: clamp(42px, 7vw, 76px);
+    font-weight: 600; color: var(--paper); line-height: 1.05;
+    margin-bottom: 24px;
+  }
+  .cta-title em { font-style: italic; color: var(--amber); }
+
+  .cta-sub { font-size: 20px; color: #8a8680; margin-bottom: 48px; line-height: 1.6; }
+
+  .waitlist-form-cta {
+    display: flex; gap: 0;
+    max-width: 440px; margin: 0 auto;
+    box-shadow: 0 8px 60px rgba(200,130,42,0.3);
+  }
+  .waitlist-form-cta input {
+    flex: 1; padding: 18px 20px;
+    font-family: 'DM Mono', monospace; font-size: 13px;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.08); color: var(--paper);
+    outline: none; transition: border-color 0.2s;
+  }
+  .waitlist-form-cta input::placeholder { color: rgba(255,255,255,0.3); }
+  .waitlist-form-cta input:focus { border-color: var(--amber); }
+  .waitlist-form-cta button {
+    padding: 18px 28px; background: var(--amber); color: #fff;
+    border: none; cursor: pointer;
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    letter-spacing: 2px; text-transform: uppercase;
+    transition: background 0.2s; white-space: nowrap;
+  }
+  .waitlist-form-cta button:hover { background: var(--amber-light); color: var(--ink); }
+
+  .cta-note {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: rgba(255,255,255,0.3); margin-top: 16px; letter-spacing: 0.5px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0a0908;
+    padding: 32px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-logo { font-size: 18px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .footer-logo span { color: var(--amber); }
+  .footer-note { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: 1px; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    nav { padding: 16px 20px; }
+    .problem-grid, .steps, .pricing-grid { grid-template-columns: 1fr; }
+    .emotions-grid { grid-template-columns: repeat(2, 1fr); }
+    .waitlist-form { flex-direction: column; }
+    .waitlist-form input { border-right: 1.5px solid var(--border); border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">A<span>tt</span>une</div>
+  <a href="#waitlist" class="nav-pill">Join Waitlist</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+  </div>
+
+  <div class="hero-eyebrow">Cross-Platform Audience Intelligence</div>
+
+  <h1 class="hero-title">
+    The one view no platform<br>can ever <em>give you</em>.
+  </h1>
+
+  <p class="hero-sub">
+    YouTube knows your YouTube audience. TikTok knows your TikTok audience. Attune shows you both — and forecasts what they need from you, 2–3 weeks ahead.
+  </p>
+
+  <form class="waitlist-form" id="hero-form" onsubmit="handleSubmit(event, 'hero-success')">
+    <input type="email" placeholder="your@email.com" required />
+    <button type="submit">Join Waitlist</button>
+  </form>
+  <div class="success-msg" id="hero-success">✓ &nbsp; You're on the list. We'll be in touch soon.</div>
+  <p class="hero-note">Free during beta · No credit card required · Starting at $79/mo</p>
+</section>
+
+<div class="section-divider"><span>The Problem</span></div>
+
+<!-- PROBLEM -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-tag reveal">Why creators plateau</div>
+    <h2 class="section-title reveal reveal-delay-1">
+      You're flying<br><em>blind</em>.
+    </h2>
+
+    <div class="problem-grid">
+      <div class="problem-card reveal">
+        <div class="problem-num">01</div>
+        <div class="problem-title">You post on gut feel</div>
+        <p class="problem-text">What worked 3 months ago is your best data point. But your audience has already moved on.</p>
+      </div>
+      <div class="problem-card reveal reveal-delay-1">
+        <div class="problem-num">02</div>
+        <div class="problem-title">You see engagement after the fact</div>
+        <p class="problem-text">By the time analytics tell you what resonated, the moment has passed. You can't react fast enough.</p>
+      </div>
+      <div class="problem-card reveal reveal-delay-2">
+        <div class="problem-num">03</div>
+        <div class="problem-title">Your platforms tell you nothing about each other</div>
+        <p class="problem-text">YouTube Analytics shows YouTube. TikTok Analytics shows TikTok. Nobody shows you why the same video lands differently across both — or what your audience needs on each one <em>right now</em>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><span>How It Works</span></div>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="how-inner">
+    <div class="how-tag">The Attune method</div>
+    <h2 class="how-title">One view.<br>Every <em>platform</em>.</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-icon">01</div>
+        <div class="step-title">Connect your platforms</div>
+        <p class="step-text">Link YouTube, TikTok, and Instagram via OAuth. Attune processes your last 12 months of comments and engagement patterns across all of them. Your first cross-platform Pulse Report is ready in 24 hours.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">02</div>
+        <div class="step-title">See your cross-platform mood map</div>
+        <p class="step-text">Our emotion model maps comment signals to 8 emotional states across YouTube, TikTok, and Instagram — showing you whether your audiences are aligned or diverging, and what that means for what you create next.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">03</div>
+        <div class="step-title">Get your weekly forecast</div>
+        <p class="step-text">Every Monday, your Pulse Update arrives. Three things: how your audience shifted, one content opportunity to act on, one warning flag if relevant.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">04</div>
+        <div class="step-title">Score your ideas before you create</div>
+        <p class="step-text">Type in a video idea. Attune scores it against your current audience mood and suggests how to reframe it for maximum resonance — without changing the core concept.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><span>The Emotional Taxonomy</span></div>
+
+<!-- EMOTIONS -->
+<section class="emotions-section">
+  <div class="emotions-inner">
+    <div class="section-tag reveal">What we track</div>
+    <h2 class="section-title reveal reveal-delay-1">
+      Beyond positive<br>and <em>negative</em>.
+    </h2>
+    <p style="color: var(--muted); font-size: 19px; margin-top: 20px; max-width: 560px; line-height: 1.6;" class="reveal reveal-delay-2">
+      Generic sentiment analysis is useless for creators. Attune tracks the 8 emotional states that actually predict whether your next video will land.
+    </p>
+
+    <div class="emotions-grid">
+      <div class="emotion-chip reveal">
+        <div class="emotion-icon">🔍</div>
+        <div class="emotion-name">Curiosity</div>
+        <div class="emotion-desc">deep dives · explainers</div>
+      </div>
+      <div class="emotion-chip reveal reveal-delay-1">
+        <div class="emotion-icon">🌅</div>
+        <div class="emotion-name">Nostalgia</div>
+        <div class="emotion-desc">stories · retrospectives</div>
+      </div>
+      <div class="emotion-chip reveal reveal-delay-2">
+        <div class="emotion-icon">🚀</div>
+        <div class="emotion-name">Aspiration</div>
+        <div class="emotion-desc">how-tos · success arcs</div>
+      </div>
+      <div class="emotion-chip reveal reveal-delay-3">
+        <div class="emotion-icon">🎯</div>
+        <div class="emotion-name">Skepticism</div>
+        <div class="emotion-desc">hot takes · myth-busting</div>
+      </div>
+      <div class="emotion-chip reveal">
+        <div class="emotion-icon">🤝</div>
+        <div class="emotion-name">Belonging</div>
+        <div class="emotion-desc">community · Q&As</div>
+      </div>
+      <div class="emotion-chip reveal reveal-delay-1">
+        <div class="emotion-icon">⚡</div>
+        <div class="emotion-name">Outrage</div>
+        <div class="emotion-desc">opinions · reactions</div>
+      </div>
+      <div class="emotion-chip reveal reveal-delay-2">
+        <div class="emotion-icon">✨</div>
+        <div class="emotion-name">Delight</div>
+        <div class="emotion-desc">surprises · shorts</div>
+      </div>
+      <div class="emotion-chip reveal reveal-delay-3">
+        <div class="emotion-icon">💙</div>
+        <div class="emotion-name">Vulnerability</div>
+        <div class="emotion-desc">confessions · struggles</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><span>Pricing</span></div>
+
+<!-- PRICING -->
+<section class="pricing-section">
+  <div class="pricing-inner">
+    <div class="section-tag reveal">Simple pricing</div>
+    <h2 class="section-title reveal reveal-delay-1">
+      Invest in knowing<br>your <em>audience</em>.
+    </h2>
+
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <div class="price-tier">Solo Creator</div>
+        <div class="price-amount">$79</div>
+        <div class="price-per">per month</div>
+        <ul class="price-features">
+          <li>1 channel (YouTube)</li>
+          <li>Weekly Pulse Updates</li>
+          <li>Monthly Deep Report</li>
+          <li>10 Idea Scores / month</li>
+        </ul>
+      </div>
+      <div class="price-card featured reveal reveal-delay-1">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-tier">Creator Pro</div>
+        <div class="price-amount">$149</div>
+        <div class="price-per">per month</div>
+        <ul class="price-features">
+          <li>Up to 3 channels</li>
+          <li>Cross-platform Mood Map</li>
+          <li>Unlimited Idea Scoring</li>
+          <li>Slack / Discord alerts</li>
+        </ul>
+      </div>
+      <div class="price-card reveal reveal-delay-2">
+        <div class="price-tier">Agency</div>
+        <div class="price-amount">$599</div>
+        <div class="price-per">per month</div>
+        <ul class="price-features">
+          <li>Up to 20 channels</li>
+          <li>White-label reports</li>
+          <li>Cross-platform dashboard</li>
+          <li>API access</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section" id="waitlist">
+  <div class="cta-inner">
+    <h2 class="cta-title">Your audience is<br>telling you <em>something</em>.</h2>
+    <p class="cta-sub">Join the waitlist. Get early access and a free cross-platform Audience Pulse Report — we'll analyse your YouTube, TikTok, and Instagram audiences and show you the view no single platform can.</p>
+
+    <form class="waitlist-form-cta" onsubmit="handleSubmit(event, 'cta-success')">
+      <input type="email" placeholder="your@email.com" required />
+      <button type="submit">Get Early Access</button>
+    </form>
+    <div class="success-msg" id="cta-success" style="background:rgba(200,130,42,0.1);border-color:rgba(200,130,42,0.3);margin-top:16px;">
+      ✓ &nbsp; You're on the list. We'll be in touch soon.
+    </div>
+    <p class="cta-note">Free during beta · No credit card · Launching 2026</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">A<span>tt</span>une</div>
+  <div class="footer-note">© 2026 Attune · Cross-Platform Audience Intelligence</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Form submit handler
+  function handleSubmit(e, successId) {
+    e.preventDefault();
+    const form = e.target;
+    const successEl = document.getElementById(successId);
+    // In production: POST to your email capture endpoint here
+    form.style.display = 'none';
+    successEl.style.display = 'block';
+  }
+
+  // Smooth nav hide/show
+  let lastY = 0;
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    nav.style.transform = (y > lastY && y > 80) ? 'translateY(-100%)' : 'translateY(0)';
+    nav.style.transition = 'transform 0.3s ease';
+    lastY = y;
+  });
+</script>
+</body>
+</html>
