@@ -69,15 +69,10 @@
     content: '';
     position: absolute; inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    opacity: 0.5;
+    pointer-events: none; opacity: 0.5;
   }
 
-  .rings {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-  }
+  .rings { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
   .ring {
     position: absolute; border-radius: 50%;
     border: 1px solid rgba(200,130,42,0.12);
@@ -104,59 +99,56 @@
 
   .hero-title {
     font-size: clamp(52px, 9vw, 96px);
-    font-weight: 600; line-height: 1.0;
-    letter-spacing: -1px;
+    font-weight: 600; line-height: 1.0; letter-spacing: -1px;
     max-width: 880px;
     animation: fadeUp 0.8s 0.35s ease both;
     position: relative; z-index: 1;
   }
-
   .hero-title em { font-style: italic; color: var(--amber); }
 
   .hero-sub {
     font-size: clamp(18px, 2.5vw, 24px);
     color: var(--muted); font-weight: 400;
-    max-width: 560px; line-height: 1.6;
-    margin-top: 28px;
+    max-width: 560px; line-height: 1.6; margin-top: 28px;
     animation: fadeUp 0.8s 0.5s ease both;
     position: relative; z-index: 1;
   }
 
-  /* ── WAITLIST FORM ── */
-  .waitlist-form {
-    display: flex; gap: 0;
+  /* ── HERO FORM ── */
+  .waitlist-wrap {
     margin-top: 48px;
     animation: fadeUp 0.8s 0.65s ease both;
     position: relative; z-index: 1;
-    max-width: 480px; width: 100%;
+    width: 100%; max-width: 560px;
+  }
+
+  .waitlist-fields {
+    display: flex; gap: 0;
     box-shadow: 0 8px 40px rgba(0,0,0,0.12);
   }
 
-  .waitlist-form input {
-    flex: 1;
+  .waitlist-fields input {
+    flex: 1; min-width: 0;
     padding: 16px 20px;
     font-family: 'DM Mono', monospace; font-size: 13px;
-    border: 1.5px solid var(--border);
-    border-right: none;
+    border: 1.5px solid var(--border); border-right: none;
     background: #fff; color: var(--ink);
-    outline: none;
-    transition: border-color 0.2s;
+    outline: none; transition: border-color 0.2s;
   }
-  .waitlist-form input::placeholder { color: #bbb; }
-  .waitlist-form input:focus { border-color: var(--amber); }
+  .waitlist-fields input::placeholder { color: #bbb; }
+  .waitlist-fields input:focus { border-color: var(--amber); }
 
-  .waitlist-form button {
-    padding: 16px 28px;
+  .waitlist-fields button {
+    padding: 16px 22px;
     background: var(--amber); color: #fff;
     border: none; cursor: pointer;
     font-family: 'DM Mono', monospace;
-    font-size: 11px; letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: background 0.2s, transform 0.1s;
-    white-space: nowrap;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    transition: background 0.2s, transform 0.1s; white-space: nowrap;
   }
-  .waitlist-form button:hover { background: var(--ink); }
-  .waitlist-form button:active { transform: scale(0.98); }
+  .waitlist-fields button:hover { background: var(--ink); }
+  .waitlist-fields button:active { transform: scale(0.98); }
+  .waitlist-fields button:disabled { opacity: 0.6; cursor: not-allowed; }
 
   .hero-note {
     font-family: 'DM Mono', monospace;
@@ -168,14 +160,10 @@
 
   .success-msg {
     display: none;
-    background: var(--amber-pale);
-    border: 1px solid var(--amber-light);
+    background: var(--amber-pale); border: 1px solid var(--amber-light);
     padding: 16px 28px;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px; color: var(--amber);
-    letter-spacing: 1px;
-    margin-top: 20px;
-    animation: fadeUp 0.4s ease both;
+    font-family: 'DM Mono', monospace; font-size: 12px;
+    color: var(--amber); letter-spacing: 1px; margin-top: 20px;
   }
 
   /* ── DIVIDER ── */
@@ -183,278 +171,105 @@
     display: flex; align-items: center; gap: 20px;
     padding: 0 48px; max-width: 900px; margin: 0 auto;
   }
-  .section-divider::before, .section-divider::after {
-    content: ''; flex: 1; height: 1px; background: var(--border);
-  }
-  .section-divider span {
-    font-family: 'DM Mono', monospace; font-size: 10px;
-    letter-spacing: 3px; color: var(--muted); text-transform: uppercase;
-  }
+  .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .section-divider span { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; }
 
-  /* ── PROBLEM SECTION ── */
+  /* ── SECTIONS ── */
   .section { padding: 100px 24px; }
   .section-inner { max-width: 900px; margin: 0 auto; }
-
-  .section-tag {
-    font-family: 'DM Mono', monospace; font-size: 10px;
-    letter-spacing: 4px; text-transform: uppercase; color: var(--amber);
-    margin-bottom: 20px;
-  }
-
-  .section-title {
-    font-size: clamp(36px, 5vw, 58px);
-    font-weight: 600; line-height: 1.1;
-    letter-spacing: -0.5px;
-  }
-
+  .section-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--amber); margin-bottom: 20px; }
+  .section-title { font-size: clamp(36px, 5vw, 58px); font-weight: 600; line-height: 1.1; letter-spacing: -0.5px; }
   .section-title em { font-style: italic; color: var(--amber); }
 
-  .problem-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1px;
-    background: var(--border);
-    margin-top: 60px;
-    border: 1px solid var(--border);
-  }
-
-  .problem-card {
-    background: var(--paper);
-    padding: 40px 32px;
-    position: relative;
-    overflow: hidden;
-    transition: background 0.3s;
-  }
+  .problem-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--border); margin-top: 60px; border: 1px solid var(--border); }
+  .problem-card { background: var(--paper); padding: 40px 32px; position: relative; overflow: hidden; transition: background 0.3s; }
   .problem-card:hover { background: var(--amber-pale); }
-
-  .problem-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 52px; font-weight: 500;
-    color: rgba(200,130,42,0.15);
-    line-height: 1; margin-bottom: 20px;
-    transition: color 0.3s;
-  }
+  .problem-num { font-family: 'DM Mono', monospace; font-size: 52px; font-weight: 500; color: rgba(200,130,42,0.15); line-height: 1; margin-bottom: 20px; transition: color 0.3s; }
   .problem-card:hover .problem-num { color: rgba(200,130,42,0.4); }
-
   .problem-title { font-size: 22px; font-weight: 600; margin-bottom: 12px; }
   .problem-text { font-size: 16px; color: var(--muted); line-height: 1.6; }
 
-  /* ── HOW IT WORKS ── */
-  .how-section {
-    background: var(--ink);
-    padding: 100px 24px;
-    position: relative; overflow: hidden;
-  }
-
-  .how-section::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 20% 50%, rgba(200,130,42,0.08) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(200,130,42,0.05) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
+  .how-section { background: var(--ink); padding: 100px 24px; position: relative; overflow: hidden; }
+  .how-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(200,130,42,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(200,130,42,0.05) 0%, transparent 50%); pointer-events: none; }
   .how-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
-
-  .how-tag {
-    font-family: 'DM Mono', monospace; font-size: 10px;
-    letter-spacing: 4px; text-transform: uppercase; color: var(--amber);
-    margin-bottom: 20px;
-  }
-
-  .how-title {
-    font-size: clamp(36px, 5vw, 58px);
-    font-weight: 600; line-height: 1.1; color: var(--paper);
-  }
+  .how-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--amber); margin-bottom: 20px; }
+  .how-title { font-size: clamp(36px, 5vw, 58px); font-weight: 600; line-height: 1.1; color: var(--paper); }
   .how-title em { font-style: italic; color: var(--amber); }
-
-  .steps {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    margin-top: 60px;
-    background: rgba(255,255,255,0.06);
-  }
-
-  .step {
-    background: rgba(255,255,255,0.03);
-    padding: 40px 36px;
-    border: 1px solid rgba(255,255,255,0.06);
-    transition: background 0.3s;
-    position: relative;
-  }
+  .steps { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 60px; background: rgba(255,255,255,0.06); }
+  .step { background: rgba(255,255,255,0.03); padding: 40px 36px; border: 1px solid rgba(255,255,255,0.06); transition: background 0.3s; }
   .step:hover { background: rgba(200,130,42,0.08); }
-
-  .step-icon {
-    width: 48px; height: 48px;
-    border: 1px solid rgba(200,130,42,0.4);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'DM Mono', monospace; font-size: 16px;
-    color: var(--amber); margin-bottom: 24px;
-  }
-
+  .step-icon { width: 48px; height: 48px; border: 1px solid rgba(200,130,42,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 16px; color: var(--amber); margin-bottom: 24px; }
   .step-title { font-size: 22px; font-weight: 600; color: var(--paper); margin-bottom: 12px; }
   .step-text { font-size: 16px; color: #8a8680; line-height: 1.7; }
 
-  /* ── EMOTIONS SECTION ── */
   .emotions-section { padding: 100px 24px; background: var(--cream); }
   .emotions-inner { max-width: 900px; margin: 0 auto; }
-
-  .emotions-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-top: 60px;
-  }
-
-  .emotion-chip {
-    background: #fff;
-    border: 1px solid var(--border);
-    padding: 24px 20px;
-    text-align: center;
-    transition: all 0.25s;
-    cursor: default;
-  }
-  .emotion-chip:hover {
-    border-color: var(--amber);
-    background: var(--amber-pale);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(200,130,42,0.15);
-  }
-
+  .emotions-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 60px; }
+  .emotion-chip { background: #fff; border: 1px solid var(--border); padding: 24px 20px; text-align: center; transition: all 0.25s; cursor: default; }
+  .emotion-chip:hover { border-color: var(--amber); background: var(--amber-pale); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(200,130,42,0.15); }
   .emotion-icon { font-size: 28px; margin-bottom: 10px; }
   .emotion-name { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
   .emotion-desc { font-size: 13px; color: var(--muted); font-family: 'DM Mono', monospace; }
 
-  /* ── PRICING ── */
   .pricing-section { padding: 100px 24px; }
   .pricing-inner { max-width: 900px; margin: 0 auto; }
-
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 2px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-top: 60px;
-  }
-
-  .price-card {
-    background: var(--paper);
-    padding: 44px 32px;
-    position: relative;
-    transition: background 0.2s;
-  }
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; background: var(--border); border: 1px solid var(--border); margin-top: 60px; }
+  .price-card { background: var(--paper); padding: 44px 32px; position: relative; transition: background 0.2s; }
   .price-card.featured { background: var(--ink); }
-
-  .price-badge {
-    font-family: 'DM Mono', monospace; font-size: 9px;
-    letter-spacing: 2px; text-transform: uppercase;
-    padding: 4px 10px; background: var(--amber);
-    color: #fff; display: inline-block; margin-bottom: 20px;
-  }
-
-  .price-tier {
-    font-size: 13px; font-weight: 600; letter-spacing: 2px;
-    text-transform: uppercase; font-family: 'DM Mono', monospace;
-    color: var(--muted); margin-bottom: 16px;
-  }
+  .price-badge { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 10px; background: var(--amber); color: #fff; display: inline-block; margin-bottom: 20px; }
+  .price-tier { font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; font-family: 'DM Mono', monospace; color: var(--muted); margin-bottom: 16px; }
   .price-card.featured .price-tier { color: rgba(255,255,255,0.5); }
-
   .price-amount { font-size: 52px; font-weight: 700; line-height: 1; margin-bottom: 8px; }
   .price-card.featured .price-amount { color: var(--amber); }
-
-  .price-per {
-    font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 28px;
-  }
+  .price-per { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 28px; }
   .price-card.featured .price-per { color: rgba(255,255,255,0.4); }
-
   .price-features { list-style: none; }
-  .price-features li {
-    font-size: 15px; color: var(--muted); padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 10px;
-  }
+  .price-features li { font-size: 15px; color: var(--muted); padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
   .price-card.featured .price-features li { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.1); }
   .price-features li::before { content: '→'; color: var(--amber); font-size: 12px; flex-shrink: 0; }
 
   /* ── FINAL CTA ── */
-  .cta-section {
-    padding: 120px 24px;
-    text-align: center;
-    background: var(--ink);
-    position: relative; overflow: hidden;
-  }
-  .cta-section::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at center, rgba(200,130,42,0.1) 0%, transparent 70%);
-  }
-
+  .cta-section { padding: 120px 24px; text-align: center; background: var(--ink); position: relative; overflow: hidden; }
+  .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(200,130,42,0.1) 0%, transparent 70%); }
   .cta-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
-
-  .cta-title {
-    font-size: clamp(42px, 7vw, 76px);
-    font-weight: 600; color: var(--paper); line-height: 1.05; margin-bottom: 24px;
-  }
+  .cta-title { font-size: clamp(42px, 7vw, 76px); font-weight: 600; color: var(--paper); line-height: 1.05; margin-bottom: 24px; }
   .cta-title em { font-style: italic; color: var(--amber); }
-
   .cta-sub { font-size: 20px; color: #8a8680; margin-bottom: 48px; line-height: 1.6; }
 
-  .waitlist-form-cta {
-    display: flex; gap: 0;
-    max-width: 440px; margin: 0 auto;
-    box-shadow: 0 8px 60px rgba(200,130,42,0.3);
-  }
-  .waitlist-form-cta input {
-    flex: 1; padding: 18px 20px;
+  .cta-form-wrap { max-width: 480px; margin: 0 auto; }
+  .cta-fields { display: flex; gap: 0; box-shadow: 0 8px 60px rgba(200,130,42,0.3); }
+  .cta-fields input {
+    flex: 1; min-width: 0;
+    padding: 18px 20px;
     font-family: 'DM Mono', monospace; font-size: 13px;
-    border: 1.5px solid rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.15); border-right: none;
     background: rgba(255,255,255,0.08); color: var(--paper);
     outline: none; transition: border-color 0.2s;
   }
-  .waitlist-form-cta input::placeholder { color: rgba(255,255,255,0.3); }
-  .waitlist-form-cta input:focus { border-color: var(--amber); }
-  .waitlist-form-cta button {
-    padding: 18px 28px; background: var(--amber); color: #fff;
-    border: none; cursor: pointer;
+  .cta-fields input::placeholder { color: rgba(255,255,255,0.3); }
+  .cta-fields input:focus { border-color: var(--amber); }
+  .cta-submit {
+    width: 100%; padding: 18px 28px;
+    background: var(--amber); color: #fff; border: none; cursor: pointer;
     font-family: 'DM Mono', monospace; font-size: 11px;
-    letter-spacing: 2px; text-transform: uppercase;
-    transition: background 0.2s; white-space: nowrap;
+    letter-spacing: 2px; text-transform: uppercase; transition: background 0.2s;
+    margin-top: 0;
   }
-  .waitlist-form-cta button:hover { background: var(--amber-light); color: var(--ink); }
+  .cta-submit:hover { background: var(--amber-light); color: var(--ink); }
+  .cta-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
-  .cta-note {
-    font-family: 'DM Mono', monospace; font-size: 11px;
-    color: rgba(255,255,255,0.3); margin-top: 16px; letter-spacing: 0.5px;
-  }
+  .cta-note { font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 16px; letter-spacing: 0.5px; }
 
   /* ── FOOTER ── */
-  footer {
-    background: #0a0908;
-    padding: 32px 48px;
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 16px;
-  }
+  footer { background: #0a0908; padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
   .footer-logo { font-size: 18px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.3); }
   .footer-logo span { color: var(--amber); }
   .footer-note { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: 1px; }
 
   /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .reveal {
-    opacity: 0; transform: translateY(32px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
   .reveal-delay-1 { transition-delay: 0.1s; }
   .reveal-delay-2 { transition-delay: 0.2s; }
@@ -465,8 +280,10 @@
     nav { padding: 16px 20px; }
     .problem-grid, .steps, .pricing-grid { grid-template-columns: 1fr; }
     .emotions-grid { grid-template-columns: repeat(2, 1fr); }
-    .waitlist-form { flex-direction: column; }
-    .waitlist-form input { border-right: 1.5px solid var(--border); border-bottom: none; }
+    .waitlist-fields { flex-direction: column; }
+    .waitlist-fields input { border-right: 1.5px solid var(--border); border-bottom: none; }
+    .cta-fields { flex-direction: column; }
+    .cta-fields input { border-right: 1.5px solid rgba(255,255,255,0.15); border-bottom: none; }
   }
 </style>
 </head>
@@ -481,10 +298,8 @@
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="rings">
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
   </div>
 
   <div class="hero-eyebrow">Cross-Platform Audience Intelligence</div>
@@ -497,11 +312,16 @@
     YouTube knows your YouTube audience. TikTok knows your TikTok audience. Attune shows you both — and forecasts what they need from you, 2–3 weeks ahead.
   </p>
 
-  <form class="waitlist-form" id="hero-form" onsubmit="handleSubmit(event, 'hero-form', 'hero-success')">
-    <input type="email" id="hero-email" placeholder="your@email.com" required />
-    <button type="submit">Join Waitlist</button>
-  </form>
-  <div class="success-msg" id="hero-success">✓ &nbsp; You're on the list. We'll be in touch soon.</div>
+  <div class="waitlist-wrap">
+    <div class="waitlist-fields" id="hero-form">
+      <input type="text"  id="hero-name"  placeholder="Your name" />
+      <input type="email" id="hero-email" placeholder="your@email.com" />
+      <button onclick="handleSubmit('hero-name','hero-email','hero-form','hero-success',this)">
+        Join Waitlist
+      </button>
+    </div>
+    <div class="success-msg" id="hero-success">✓ &nbsp; You're on the list. We'll be in touch soon.</div>
+  </div>
   <p class="hero-note">Free during beta · No credit card required · Starting at $79/mo</p>
 </section>
 
@@ -511,10 +331,7 @@
 <section class="section">
   <div class="section-inner">
     <div class="section-tag reveal">Why creators plateau</div>
-    <h2 class="section-title reveal reveal-delay-1">
-      You're flying<br><em>blind</em>.
-    </h2>
-
+    <h2 class="section-title reveal reveal-delay-1">You're flying<br><em>blind</em>.</h2>
     <div class="problem-grid">
       <div class="problem-card reveal">
         <div class="problem-num">01</div>
@@ -542,7 +359,6 @@
   <div class="how-inner">
     <div class="how-tag">The Attune method</div>
     <h2 class="how-title">One view.<br>Every <em>platform</em>.</h2>
-
     <div class="steps">
       <div class="step">
         <div class="step-icon">01</div>
@@ -574,54 +390,19 @@
 <section class="emotions-section">
   <div class="emotions-inner">
     <div class="section-tag reveal">What we track</div>
-    <h2 class="section-title reveal reveal-delay-1">
-      Beyond positive<br>and <em>negative</em>.
-    </h2>
+    <h2 class="section-title reveal reveal-delay-1">Beyond positive<br>and <em>negative</em>.</h2>
     <p style="color: var(--muted); font-size: 19px; margin-top: 20px; max-width: 560px; line-height: 1.6;" class="reveal reveal-delay-2">
       Generic sentiment analysis is useless for creators. Attune tracks the 8 emotional states that actually predict whether your next video will land.
     </p>
-
     <div class="emotions-grid">
-      <div class="emotion-chip reveal">
-        <div class="emotion-icon">🔍</div>
-        <div class="emotion-name">Curiosity</div>
-        <div class="emotion-desc">deep dives · explainers</div>
-      </div>
-      <div class="emotion-chip reveal reveal-delay-1">
-        <div class="emotion-icon">🌅</div>
-        <div class="emotion-name">Nostalgia</div>
-        <div class="emotion-desc">stories · retrospectives</div>
-      </div>
-      <div class="emotion-chip reveal reveal-delay-2">
-        <div class="emotion-icon">🚀</div>
-        <div class="emotion-name">Aspiration</div>
-        <div class="emotion-desc">how-tos · success arcs</div>
-      </div>
-      <div class="emotion-chip reveal reveal-delay-3">
-        <div class="emotion-icon">🎯</div>
-        <div class="emotion-name">Skepticism</div>
-        <div class="emotion-desc">hot takes · myth-busting</div>
-      </div>
-      <div class="emotion-chip reveal">
-        <div class="emotion-icon">🤝</div>
-        <div class="emotion-name">Belonging</div>
-        <div class="emotion-desc">community · Q&As</div>
-      </div>
-      <div class="emotion-chip reveal reveal-delay-1">
-        <div class="emotion-icon">⚡</div>
-        <div class="emotion-name">Outrage</div>
-        <div class="emotion-desc">opinions · reactions</div>
-      </div>
-      <div class="emotion-chip reveal reveal-delay-2">
-        <div class="emotion-icon">✨</div>
-        <div class="emotion-name">Delight</div>
-        <div class="emotion-desc">surprises · shorts</div>
-      </div>
-      <div class="emotion-chip reveal reveal-delay-3">
-        <div class="emotion-icon">💙</div>
-        <div class="emotion-name">Vulnerability</div>
-        <div class="emotion-desc">confessions · struggles</div>
-      </div>
+      <div class="emotion-chip reveal"><div class="emotion-icon">🔍</div><div class="emotion-name">Curiosity</div><div class="emotion-desc">deep dives · explainers</div></div>
+      <div class="emotion-chip reveal reveal-delay-1"><div class="emotion-icon">🌅</div><div class="emotion-name">Nostalgia</div><div class="emotion-desc">stories · retrospectives</div></div>
+      <div class="emotion-chip reveal reveal-delay-2"><div class="emotion-icon">🚀</div><div class="emotion-name">Aspiration</div><div class="emotion-desc">how-tos · success arcs</div></div>
+      <div class="emotion-chip reveal reveal-delay-3"><div class="emotion-icon">🎯</div><div class="emotion-name">Skepticism</div><div class="emotion-desc">hot takes · myth-busting</div></div>
+      <div class="emotion-chip reveal"><div class="emotion-icon">🤝</div><div class="emotion-name">Belonging</div><div class="emotion-desc">community · Q&As</div></div>
+      <div class="emotion-chip reveal reveal-delay-1"><div class="emotion-icon">⚡</div><div class="emotion-name">Outrage</div><div class="emotion-desc">opinions · reactions</div></div>
+      <div class="emotion-chip reveal reveal-delay-2"><div class="emotion-icon">✨</div><div class="emotion-name">Delight</div><div class="emotion-desc">surprises · shorts</div></div>
+      <div class="emotion-chip reveal reveal-delay-3"><div class="emotion-icon">💙</div><div class="emotion-name">Vulnerability</div><div class="emotion-desc">confessions · struggles</div></div>
     </div>
   </div>
 </section>
@@ -632,10 +413,7 @@
 <section class="pricing-section">
   <div class="pricing-inner">
     <div class="section-tag reveal">Simple pricing</div>
-    <h2 class="section-title reveal reveal-delay-1">
-      Invest in knowing<br>your <em>audience</em>.
-    </h2>
-
+    <h2 class="section-title reveal reveal-delay-1">Invest in knowing<br>your <em>audience</em>.</h2>
     <div class="pricing-grid">
       <div class="price-card reveal">
         <div class="price-tier">Solo Creator</div>
@@ -681,12 +459,19 @@
     <h2 class="cta-title">Your audience is<br>telling you <em>something</em>.</h2>
     <p class="cta-sub">Join the waitlist. Get early access and a free cross-platform Audience Pulse Report — we'll analyse your YouTube, TikTok, and Instagram audiences and show you the view no single platform can.</p>
 
-    <form class="waitlist-form-cta" id="cta-form" onsubmit="handleSubmit(event, 'cta-form', 'cta-success')">
-      <input type="email" id="cta-email" placeholder="your@email.com" required />
-      <button type="submit">Get Early Access</button>
-    </form>
-    <div class="success-msg" id="cta-success" style="background:rgba(200,130,42,0.1);border-color:rgba(200,130,42,0.3);margin-top:16px;">
-      ✓ &nbsp; You're on the list. We'll be in touch soon.
+    <div class="cta-form-wrap">
+      <div id="cta-form">
+        <div class="cta-fields">
+          <input type="text"  id="cta-name"  placeholder="Your name" />
+          <input type="email" id="cta-email" placeholder="your@email.com" />
+        </div>
+        <button class="cta-submit" onclick="handleSubmit('cta-name','cta-email','cta-form','cta-success',this)">
+          Get Early Access
+        </button>
+      </div>
+      <div class="success-msg" id="cta-success" style="background:rgba(200,130,42,0.1);border-color:rgba(200,130,42,0.3);">
+        ✓ &nbsp; You're on the list. We'll be in touch soon.
+      </div>
     </div>
     <p class="cta-note">Free during beta · No credit card · Launching 2026</p>
   </div>
@@ -699,50 +484,43 @@
 </footer>
 
 <script>
-  // ── GOOGLE SHEETS INTEGRATION ──
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyrp_4jNUdFJdLAbrFHNfSg4r4vjpTefX4Y4aVXawsJbekS9lejIEBRd-B-G0orwuXz/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwm-zNLKQfObGjU6X8pPYETvGoLm4-0E5mR9AeldFFgL0ql7uFpVHDmqQBUjSur9-wn/exec';
 
-  async function handleSubmit(e, formId, successId) {
-    e.preventDefault();
+  async function handleSubmit(nameId, emailId, formId, successId, btn) {
+    const name  = document.getElementById(nameId).value.trim();
+    const email = document.getElementById(emailId).value.trim();
 
-    const form = document.getElementById(formId);
-    const successEl = document.getElementById(successId);
-    const emailInput = form.querySelector('input[type="email"]');
-    const button = form.querySelector('button');
-    const email = emailInput.value.trim();
+    if (!email || !email.includes('@')) {
+      alert('Please enter a valid email address.');
+      return;
+    }
 
-    // Basic validation
-    if (!email || !email.includes('@')) return;
-
-    // Loading state
-    button.textContent = 'Sending...';
-    button.disabled = true;
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
 
     try {
       await fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email })
+        body: JSON.stringify({ name, email })
       });
     } catch (err) {
-      // no-cors mode always throws on response read — this is expected
-      // the data still lands in the sheet
+      // no-cors always throws on response read — data still lands in sheet
     }
 
-    // Show success regardless (no-cors means we can't read the response)
-    form.style.display = 'none';
-    successEl.style.display = 'block';
+    document.getElementById(formId).style.display = 'none';
+    document.getElementById(successId).style.display = 'block';
   }
 
-  // ── SCROLL REVEAL ──
+  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => observer.observe(el));
 
-  // ── NAV HIDE/SHOW ON SCROLL ──
+  // Nav hide/show
   let lastY = 0;
   const nav = document.querySelector('nav');
   window.addEventListener('scroll', () => {
